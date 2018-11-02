@@ -82,13 +82,10 @@ def expression_depth(expr):
     """Given an expression expressed as Python lists, uses recursion to return
     the depth of the expression, where depth is defined by the maximum number of
     nested operations."""
-    a=0
     if not isinstance(expr,list):
         return 0
-    else:
-        a += 1
-        for i in expr:
-            return expression_depth(i)
+    return max(map(expression_depth, expr)) + 1
+
     
 
 
@@ -99,8 +96,7 @@ def remove_from_string(string, letters):
     which is the same as the old one except all occurrences of those letters
     have been removed from it."""
     for i in letters:
-        string.replace(i,'')
-    print(letters)
+        string=string.replace(i,'')
     return string
 
 def compute_string_properties(string):
@@ -111,26 +107,34 @@ def compute_string_properties(string):
            any), sorted in REVERSE alphabetical order
         2. The number of distinct characters in the string (hint: use a set)
     """
-    raise NotImplementedError
+    return (len(string),sorted(string,reverse=True),len(set(string)))
 
 def tally_letters(string):
     """Given a string of lowercase letters, returns a dictionary mapping each
     letter to the number of times it occurs in the string."""
-    raise NotImplementedError
+    return {x:string.count(x) for x in set(string)}
+    
 
 
 #### Functions that return functions ###########################################
 
 def create_multiplier_function(m):
     """Given a multiplier m, returns a function that multiplies its input by m."""
-    raise NotImplementedError
+    def my_func(a):
+        return a*m
+    return my_func
 
 def create_length_comparer_function(check_equal):
     """Returns a function that takes as input two lists. If check_equal == True,
     this function will check if the lists are of equal lengths. If
     check_equal == False, this function will check if the lists are of different
     lengths."""
-    raise NotImplementedError
+    def my_func(a,b):
+        if check_equal==True:
+            return len(a)==len(b)
+        else:
+            return len(a)!=len(b)
+    return my_func
 
 
 #### Objects and APIs: Copying and modifying objects ############################
@@ -138,13 +142,13 @@ def create_length_comparer_function(check_equal):
 def sum_of_coordinates(point):
     """Given a 2D point (represented as a Point object), returns the sum
     of its X- and Y-coordinates."""
-    raise NotImplementedError
+    return point.getX()+point.getY()
 
 def get_neighbors(point):
     """Given a 2D point (represented as a Point object), returns a list of the
     four points that neighbor it in the four coordinate directions. Uses the
     "copy" method to avoid modifying the original point."""
-    raise NotImplementedError
+    return [point.copy().setX(point.getX()+1),point.copy().setX(point.getX()-1),point.copy().setY(point.getY()+1),point.copy().setY(point.getY()-1)]
 
 
 #### Using the "key" argument ##################################################
@@ -154,13 +158,15 @@ def sort_points_by_Y(list_of_points):
     with the "key" argument to create and return a list of the SAME (not copied)
     points sorted in decreasing order based on their Y coordinates, without
     modifying the original list."""
-    raise NotImplementedError
+    my_func = lambda p:p.getY()
+    return sorted(list_of_points,key = my_func,reverse=True)
 
 def furthest_right_point(list_of_points):
     """Given a list of 2D points (represented as Point objects), uses "max" with
     the "key" argument to return the point that is furthest to the right (that
     is, the point with the largest X coordinate)."""
-    raise NotImplementedError
+    my_func = lambda x:x.getX()
+    return max(list_of_points,key = my_func)
 
 
 #### SURVEY ####################################################################
@@ -172,7 +178,7 @@ def furthest_right_point(list_of_points):
 #     D. Proficient (have been programming for multiple years, or wrote programs for many classes/projects)
 #     E. Expert (could teach a class on programming, either in a specific language or in general)
 
-PROGRAMMING_EXPERIENCE = ""
+PROGRAMMING_EXPERIENCE = "C"
 
 
 # How much experience do you have with Python?
@@ -182,13 +188,13 @@ PROGRAMMING_EXPERIENCE = ""
 #     D. Proficient (have used Python for multiple years or in many classes/projects)
 #     E. Expert (could teach a class on Python)
 
-PYTHON_EXPERIENCE = ""
+PYTHON_EXPERIENCE = "C"
 
 
 # Finally, the following questions will appear at the end of every lab.
 # The first three are required in order to receive full credit for your lab.
 
-NAME = None
-COLLABORATORS = None
-HOW_MANY_HOURS_THIS_LAB_TOOK = None
-SUGGESTIONS = None #optional
+NAME = 'Ulysses'
+COLLABORATORS = 'Myself'
+HOW_MANY_HOURS_THIS_LAB_TOOK = 'Three'
+SUGGESTIONS = 'Look forward to lab1' #optional
